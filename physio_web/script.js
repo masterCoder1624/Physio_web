@@ -1,31 +1,43 @@
-/* ==================== MENU SHOW Y HIDDEN ==================== */
-const navMenu = document.getElementById('nav-menu'),
-    navToggle = document.getElementById('nav-toggle'),
-    navClose = document.getElementById('nav-close')
+/* ==================== NEW NAVBAR LOGIC ==================== */
+const navHamburger = document.getElementById('nav-hamburger'),
+    navLinks = document.getElementById('nav-links'),
+    navItems = document.querySelectorAll('.nav-item');
 
-/* Validate if constant exists */
-if (navToggle) {
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.add('show-menu')
-    })
+// Toggle menu
+if (navHamburger) {
+    navHamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navLinks.classList.toggle('open');
+
+        // Toggle Icon
+        const icon = navHamburger.querySelector('i');
+        if (navLinks.classList.contains('open')) {
+            icon.classList.replace('ri-menu-line', 'ri-close-line');
+        } else {
+            icon.classList.replace('ri-close-line', 'ri-menu-line');
+        }
+    });
 }
 
-/* Validate if constant exists */
-if (navClose) {
-    navClose.addEventListener('click', () => {
-        navMenu.classList.remove('show-menu')
-    })
-}
+// Close on link click
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        const icon = navHamburger.querySelector('i');
+        if (icon) icon.classList.replace('ri-close-line', 'ri-menu-line');
+    });
+});
 
-/* ==================== REMOVE MENU MOBILE ==================== */
-const navLink = document.querySelectorAll('.nav__link')
-
-function linkAction() {
-    const navMenu = document.getElementById('nav-menu')
-    // When we click on each nav__link, we remove the show-menu class
-    navMenu.classList.remove('show-menu')
-}
-navLink.forEach(n => n.addEventListener('click', linkAction))
+// Close on outside click
+document.addEventListener('click', (e) => {
+    if (navLinks && navLinks.classList.contains('open')) {
+        if (!navLinks.contains(e.target) && !navHamburger.contains(e.target)) {
+            navLinks.classList.remove('open');
+            const icon = navHamburger.querySelector('i');
+            if (icon) icon.classList.replace('ri-close-line', 'ri-menu-line');
+        }
+    }
+});
 
 /* ==================== SCROLL SECTIONS ACTIVE LINK ==================== */
 const sections = document.querySelectorAll('section[id]')
@@ -38,10 +50,14 @@ function scrollActive() {
         const sectionTop = current.offsetTop - 100 // Adjusted for header height
         sectionId = current.getAttribute('id')
 
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
-        } else {
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
+        // Target the new .nav-links container
+        const link = document.querySelector('.nav-links a[href*=' + sectionId + ']')
+        if (link) {
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                link.classList.add('active-link')
+            } else {
+                link.classList.remove('active-link')
+            }
         }
     })
 }
