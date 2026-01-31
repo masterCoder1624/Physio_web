@@ -85,6 +85,7 @@ body {
     background-color: var(--body-color);
     color: var(--text-color);
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 h1,
@@ -153,7 +154,7 @@ img {
     align-items: center;
     background-color: var(--accent-color);
     color: var(--white-color);
-    padding: 0.9rem 1.8rem;
+    padding: 12px 20px;
     border-radius: var(--radius-button);
     font-weight: var(--font-medium);
     transition: all .3s ease;
@@ -207,104 +208,113 @@ img {
     margin-left: 0.5rem;
 }
 
-/* ==================== HEADER ==================== */
-.header {
-    width: 100%;
-    position: fixed;
+/* ==================== NEW NAVBAR ==================== */
+.navbar {
+    position: sticky;
     top: 0;
-    left: 0;
-    z-index: var(--z-fixed);
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    transition: .4s;
+    width: 100%;
+    background-color: var(--white-color);
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.nav {
+.nav-wrapper {
     height: var(--header-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.nav__logo {
-    color: var(--title-color);
+.nav-logo {
     font-family: var(--title-font);
-    font-weight: 700;
+    font-weight: var(--font-bold);
+    color: var(--title-color);
     font-size: 1.25rem;
-}
-
-.nav__logo span {
-    color: var(--accent-color);
-}
-
-.nav__toggle,
-.nav__close {
-    color: var(--title-color);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.nav__toggle {
-    display: none;
-}
-
-/* Mobile Menu */
-@media screen and (max-width: 767px) {
-    .nav__menu {
-        position: fixed;
-        background-color: var(--container-color);
-        top: -100%;
-        left: 0;
-        width: 100%;
-        padding: 4rem 0 3rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
-        transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
-        border-bottom-left-radius: 2rem;
-        border-bottom-right-radius: 2rem;
-    }
-
-    .nav__toggle {
-        display: block;
-    }
-
-    .nav__button {
-        display: none;
-    }
-}
-
-.nav__list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 1.5rem;
-}
-
-.nav__link {
-    color: var(--title-color);
-    font-weight: var(--font-medium);
     transition: .3s;
 }
 
-.nav__link:hover {
+.nav-logo span {
     color: var(--accent-color);
 }
 
+.nav-item {
+    color: var(--text-color);
+    font-weight: var(--font-medium);
+    transition: .3s;
+    padding: 0.5rem 0;
+}
+
+.nav-item:hover,
 .active-link {
     color: var(--accent-color);
 }
 
-.nav__close {
-    position: absolute;
-    top: 0.75rem;
-    right: 1.5rem;
+.nav-hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--title-color);
+    transition: .3s;
 }
 
-.show-menu {
-    top: 0;
+.nav-btn-mobile {
+    display: none;
 }
 
-.scroll-header {
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+.nav-btn-desktop {
+    display: inline-flex;
+}
+
+/* Desktop View */
+@media screen and (min-width: 769px) {
+    .nav-links {
+        display: flex;
+        align-items: center;
+        column-gap: 2.5rem;
+    }
+
+    .nav-hamburger {
+        display: none;
+    }
+
+    .nav-btn-mobile {
+        display: none;
+    }
+}
+
+/* Mobile View */
+@media screen and (max-width: 768px) {
+    .nav-hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--white-color);
+        display: none;
+        flex-direction: column;
+        row-gap: 2rem;
+        padding: 3rem 0;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-btn-desktop {
+        display: none;
+    }
+
+    .nav-btn-mobile {
+        display: inline-flex;
+        justify-content: center;
+    }
 }
 
 /* ==================== HERO ==================== */
@@ -339,6 +349,7 @@ img {
     display: flex;
     gap: 1rem;
     margin-bottom: 2.5rem;
+    align-items: center;
 }
 
 .hero__stats {
@@ -1116,31 +1127,8 @@ img {
 }
 
 @media screen and (min-width: 768px) {
-    .nav {
+    .nav-wrapper {
         height: calc(var(--header-height) + 1.5rem);
-    }
-
-    .nav__menu {
-        display: flex;
-        width: initial;
-        top: 0;
-        padding: 0;
-        background-color: transparent;
-        box-shadow: none;
-    }
-
-    .nav__list {
-        flex-direction: row;
-        column-gap: 2.5rem;
-    }
-
-    .nav__toggle,
-    .nav__close {
-        display: none;
-    }
-
-    .nav__button {
-        display: inline-flex;
     }
 
     .hero__container {
@@ -1183,3 +1171,402 @@ img {
     }
 }
 
+/* ==================== OUR TEAM ==================== */
+.lead-therapist__container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lead-therapist__card {
+    background-color: var(--container-color);
+    padding: 2.5rem;
+    border-radius: 2rem;
+    box-shadow: var(--shadow-soft);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.lead-therapist__img-wrapper {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.lead-therapist__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+.lead-therapist__card:hover .lead-therapist__img {
+    transform: scale(1.05);
+}
+
+.lead-therapist__badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: var(--small-font-size);
+    font-weight: var(--font-bold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(45, 169, 163, 0.3);
+}
+
+.lead-therapist__name {
+    font-size: 1.75rem;
+    color: var(--title-color);
+    margin-bottom: 0.5rem;
+}
+
+.lead-therapist__role {
+    color: var(--accent-color);
+    font-weight: var(--font-medium);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.lead-therapist__experience {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color-light);
+    margin-bottom: 1.5rem;
+    font-size: var(--small-font-size);
+}
+
+.lead-therapist__bio {
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+.lead-therapist__specializations h4 {
+    margin-bottom: 1rem;
+    color: var(--title-color);
+}
+
+.lead-therapist__specializations ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.lead-therapist__specializations li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--small-font-size);
+    color: var(--text-color);
+}
+
+.lead-therapist__specializations i {
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+/* Team Grid */
+.team__container {
+    padding-top: 1rem;
+}
+
+.team__card {
+    background-color: var(--container-color);
+    border-radius: 2rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.team__card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.team__img-wrapper {
+    height: 250px;
+    overflow: hidden;
+}
+
+.team__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+
+/* Page Hero Refinement */
+.page-hero {
+    position: relative;
+    padding: 10rem 0 6rem;
+    background-color: var(--primary-color);
+    text-align: center;
+    overflow: hidden;
+}
+
+.page-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4));
+    z-index: 1;
+}
+
+.page-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.page-hero__title {
+    font-size: var(--h1-font-size);
+    color: var(--white-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.page-hero__subtitle {
+    font-size: var(--h3-font-size);
+    color: var(--accent-color);
+    font-weight: var(--font-medium);
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Section Spacing Standardization */
+.section {
+    padding: 6rem 0;
+}
+
+.section__header {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.section__title {
+    margin-bottom: 1rem;
+}
+
+/* Utilities */
+.bg-body {
+    background-color: var(--body-color);
+}
+
+.bg-container {
+    background-color: var(--container-color);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.team__card:hover .team__img {
+    transform: scale(1.1);
+}
+
+.team__content {
+    padding: 2rem;
+}
+
+.team__name {
+    font-size: 1.25rem;
+    color: var(--title-color);
+    margin-bottom: 0.5rem;
+}
+
+.team__role {
+    color: var(--accent-color);
+    font-weight: var(--font-medium);
+    margin-bottom: 1rem;
+    font-size: var(--small-font-size);
+}
+
+.team__specialization {
+    font-size: var(--smaller-font-size);
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.team__experience {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: var(--smaller-font-size);
+    color: var(--text-color-light);
+}
+
+.team__quote {
+    font-style: italic;
+    color: var(--text-color-light);
+    font-size: var(--smaller-font-size);
+    border-left: 2px solid var(--accent-color);
+    padding-left: 1rem;
+}
+
+/* Responsive Team Page */
+@media screen and (max-width: 992px) {
+    .lead-therapist__card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .lead-therapist__specializations ul {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== PROFESSIONAL REFINEMENTS ==================== */
+
+/* Medical Typography Helpers */
+.medical-label {
+    display: inline-block;
+    font-size: var(--smaller-font-size);
+    text-transform: uppercase;
+    font-weight: var(--font-bold);
+    color: var(--accent-color);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.section-divider {
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent-color);
+    margin: 1.5rem 0;
+    border-radius: 2px;
+}
+
+/* Success Story (Case Study) Card */
+.case-study__card {
+    background-color: var(--container-color);
+    padding: 2.5rem;
+    border-radius: 2rem;
+    box-shadow: var(--shadow-soft);
+    border-left: 4px solid var(--accent-color);
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.case-study__card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.case-study__header {
+    margin-bottom: 1.5rem;
+}
+
+.case-study__title {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.case-study__patient {
+    font-size: var(--small-font-size);
+    color: var(--text-color-light);
+    display: block;
+}
+
+.case-study__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.case-study__group h4 {
+    font-size: var(--normal-font-size);
+    margin-bottom: 0.25rem;
+    color: var(--title-color);
+}
+
+.case-study__group p {
+    font-size: var(--small-font-size);
+    line-height: 1.6;
+}
+
+.case-study__outcome {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--accent-color);
+    font-weight: var(--font-medium);
+}
+
+/* Expert Profile Refinement */
+.expert-profile__card {
+    background-color: var(--container-color);
+    border-radius: 2rem;
+    padding: 3rem;
+    box-shadow: var(--shadow-soft);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3.5rem;
+    align-items: center;
+}
+
+.expert-profile__img-wrapper {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.expert-profile__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.expert-profile__badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: var(--smaller-font-size);
+    font-weight: var(--font-bold);
+}
+
+/* Spacing Utilities */
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.py-5 {
+    padding: 5rem 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 992px) {
+    .expert-profile__card {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+        gap: 2rem;
+    }
+
+    .case-study__card {
+        padding: 2rem;
+    }
+}
