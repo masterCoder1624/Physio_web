@@ -1,4 +1,4 @@
-/* ==================== NEW NAVBAR LOGIC ==================== */
+
 const navHamburger = document.getElementById('nav-hamburger'),
     navLinks = document.getElementById('nav-links'),
     navItems = document.querySelectorAll('.nav-item');
@@ -150,3 +150,4 @@ function submitForm() {
         }, 5000);
     }, 1500);
 }
+
